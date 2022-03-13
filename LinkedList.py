@@ -1,20 +1,21 @@
 from datetime import datetime
-from inspect import CO_ASYNC_GENERATOR
+from graphviz import Digraph
 
 
 class Nodo:
 
-    def __init__(self,cliente,ingrediente, cantidad,tiempo) :
+    def __init__(self,cliente,ingrediente, cantidad,tiempo, espera) :
         
         self.cliente = cliente
         self.ingrediente = ingrediente
         self.cantidad = cantidad
         self.tiempo = tiempo
+        self.espera = espera
         self.Siguiente = None
 
     def __str__(self):
 
-        return str(self.cliente,self.ingrediente,self.cantidad,self.tiempo)
+        return str(self.cliente,self.ingrediente,self.cantidad,self.tiempo,self.espera)
         
 
 class Lista:
@@ -23,9 +24,9 @@ class Lista:
         self.Primero = None
         self.Tamaño = 0
 
-    def Agregar(self,cliente,ingrediente, cantidad, tiempo):
+    def Agregar(self,cliente,ingrediente, cantidad, tiempo, espera):
 
-        Nuevo = Nodo(cliente,ingrediente, cantidad, tiempo)
+        Nuevo = Nodo(cliente,ingrediente, cantidad, tiempo,espera)
 
         if self.Tamaño == 0:
             self.Primero = Nuevo
@@ -42,19 +43,35 @@ class Lista:
 
         puntero = self.Primero
         orden = 0
-        tiempo = datetime.now()
-        hora = tiempo.hour
-        minutos = tiempo.minute + puntero.tiempo
+         
+        if self.Tamaño == 0:
+            print('NO HAY ORDENES EN LA COLA')
+        else: 
+
+            while puntero != None:
+                orden +=1
+                print('|| NUMERO DE ORDEN: '+str(orden))
+                print('|| cliente: '+puntero.cliente)
+                print('|| Orden: '+ str(puntero.cantidad) + ' Pizzas de :'+ puntero.ingrediente)
+                print('|| TIEMPO: '+ puntero.espera)
+                print('\n')
+                puntero = puntero.Siguiente
+                
+        print('')
+
+        
+
+    def Eliminar(self):
+
+        puntero = self.Primero
 
         while puntero != None:
-            orden +=1
-            print('|| NUMERO DE ORDEN: '+str(orden))
-            print('|| '+str(hora) + ': '+str(minutos))
-            print('|| cliente: '+puntero.cliente)
-            print('|| Orden'+ str(puntero.cantidad) + ' '+ puntero.ingrediente)
+
+            self.Primero = puntero.Siguiente
             puntero = puntero.Siguiente
             
-        print('')
+
+
 
 
 

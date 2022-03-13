@@ -62,6 +62,10 @@ class Menu1:
 
         salir = False
 
+        tiempo = datetime.now()
+        hora = tiempo.hour
+        minutos = tiempo.minute 
+
         llamado = Lista() #llamado a clases listas
 
         while salir == False:
@@ -84,38 +88,48 @@ class Menu1:
 
                     self.Orden()
 
-                    opcion = int(input())
-
                     #ingrediente de la orden 
 
-                    if opcion == 1: 
+                    correcto = False
 
-                        ingrediente = 'Pepperoni'
-                        tiempo = 3
+                    while correcto == False:
+
+                        opcion = int(input())
+
+                        if opcion == 1: 
+
+                            ingrediente = 'Pepperoni'
+                            tiempo = 3
+                            correcto = True
+
                 
-                    elif opcion == 2:
+                        elif opcion == 2:
 
-                        ingrediente = 'Salchicha'
-                        tiempo = 4
+                            ingrediente = 'Salchicha'
+                            tiempo = 4
+                            correcto = True
 
-                    elif opcion == 3:
+                        elif opcion == 3:
 
-                        ingrediente = 'Carne'
-                        tiempo = 10
+                            ingrediente = 'Carne'
+                            tiempo = 10
+                            correcto = True
 
-                    elif opcion == 4:
+                        elif opcion == 4:
 
-                        ingrediente = 'Queso'
-                        tiempo = 5
+                            ingrediente = 'Queso'
+                            tiempo = 5
+                            correcto = True
 
-                    elif opcion == 5:
+                        elif opcion == 5:
 
-                        ingrediente = 'Piña'
-                        tiempo = 2
+                            ingrediente = 'Piña'
+                            tiempo = 2
+                            correcto = True
 
-                    else: 
+                        else: 
 
-                        print('INGRESO UNA OPCION NO VALIDA!')
+                            print('INGRESO UNA OPCION NO VALIDA!')
                     
                     
                     #cantidad de pizzas a ordenar por ingrediente
@@ -129,18 +143,52 @@ class Menu1:
                     otra = int(input())
 
                     #eleccion si ordena otra pizza
+                    agregar = False
 
-                    if otra == 1:
-                        
-                        llamado.Agregar(nombre,ingrediente,cantidad,tiempo)
+                    while agregar == False:
 
-                    elif otra ==2:
+                        if otra == 1:
 
-                        llamado.Agregar(nombre,ingrediente,cantidad,tiempo)
-                        salida = True
+                            minutos += tiempo*cantidad
 
-                    else:
-                        print('NO INGRESO UNA OPCION VALIDA')
+                            if minutos > 60:
+
+                                minutos -= 60
+                                hora +=1
+                                esperah = str(hora)
+                                esperam = str(minutos)
+                                espera = (esperah + ':'+esperam)
+                            else: 
+                                esperah = str(hora)
+                                esperam = str(minutos)
+                                espera = (esperah + ':'+esperam)
+
+                            llamado.Agregar(nombre,ingrediente,cantidad,tiempo,espera)
+                            agregar = True
+
+                        elif otra ==2:
+
+                            minutos += tiempo*cantidad
+
+                            if minutos > 60:
+
+                                minutos -= 60
+                                hora +=1
+                                esperah = str(hora)
+                                esperam = str(minutos)
+                                espera = (esperah + ':'+esperam)
+                            else: 
+                                esperah = str(hora)
+                                esperam = str(minutos)
+                                espera = (esperah + ':'+esperam)
+
+
+                            llamado.Agregar(nombre,ingrediente,cantidad,tiempo, espera)
+                            salida = True
+                            agregar = True
+
+                        else:
+                            print('NO INGRESO UNA OPCION VALIDA')
 
 
             elif eleccion == 2:
@@ -149,7 +197,13 @@ class Menu1:
 
             elif eleccion == 3:
 
-                print()#eliminar orden en cola
+                
+                
+                llamado.Eliminar()
+                llamado.Imprimir()
+
+
+
             
             elif eleccion == 4:
 
